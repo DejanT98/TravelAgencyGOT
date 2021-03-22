@@ -1,21 +1,24 @@
 package got.backend.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Destinations")
 public class Destination {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
-
     @ManyToOne
     @JoinColumn(name = "country")
     private Country country;
+    @OneToMany(mappedBy = "destination")
+    private List<Accommodation> accommodations;
 
     public Destination() { }
 

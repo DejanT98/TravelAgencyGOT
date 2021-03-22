@@ -11,6 +11,7 @@ import java.util.List;
 public class Country {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name")
     private String name;
