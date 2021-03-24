@@ -25,24 +25,24 @@ public class CountryController {
     }
 
     @GetMapping("/{id}")
-    public Country getCountryById(@PathVariable("id") Integer id) {
-        System.out.println(id);
-        return countryRepository.getOne(id);
+    public ResponseEntity<Country> getCountryById(@PathVariable("id") Integer id) {
+        if(!countryRepository.existsById(id))
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Country country = countryRepository.getOne(id);
+        return new ResponseEntity<>(country, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Country> createCountry(@RequestBody Country country) {
-        Country c = countryRepository.save(country);
+        countryRepository.save(country);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Country> updateCountry(@PathVariable("id")Integer id,
                                                  @RequestBody Country country) {
-        Country c = countryRepository.getOne(id);
-        if(c == null) {
+        if(!countryRepository.existsById(id))
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         country.setId(id);
         countryRepository.save(country);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -50,10 +50,8 @@ public class CountryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Country> deleteCountry(@PathVariable("id") Integer id) {
-        Country c = countryRepository.getOne(id);
-        if(c == null) {
+        if(!countryRepository.existsById(id))
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         countryRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

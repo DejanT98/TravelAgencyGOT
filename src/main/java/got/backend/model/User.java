@@ -1,5 +1,6 @@
 package got.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jdk.jfr.Enabled;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "[user]")
+@JsonIgnoreProperties({ "hibernateLazyInitializer"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
