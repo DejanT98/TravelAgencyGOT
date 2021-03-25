@@ -17,12 +17,12 @@ public class CountryService {
     @Autowired
     private CountryRepository countryRepository;
 
-    private void updateDestinations(Country country) {
-        List<Destination> destinations = destinationRepository.findDestinationsByCountry(country);
-
-        for (Destination d: destinations) {
-            System.out.println(d.getName());
-        }
-    }
+//    private void updateDestinations(Country country) {
+//        List<Destination> destinations = destinationRepository.findDestinationsByCountry(country);
+//
+//        for (Destination d: destinations) {
+//            System.out.println(d.getName());
+//        }
+//    }
 
 }

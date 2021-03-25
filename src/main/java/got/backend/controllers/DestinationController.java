@@ -1,5 +1,6 @@
 package got.backend.controllers;
 
+import got.backend.model.Country;
 import got.backend.model.Destination;
 import got.backend.repository.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,15 @@ public class DestinationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Destination destination = destinationRepository.getOne(id);
         return new ResponseEntity<>(destination, HttpStatus.OK);
+    }
+
+    @GetMapping("/country/{countryName}")
+    public ResponseEntity<List<Destination>> getDestinationByCountry(@PathVariable("countryName") String countryName) {
+        List<Destination> destinations = destinationRepository.getDestinationsByCountryName(countryName.toLowerCase());
+        if(destinations == null || destinations.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(destinations, HttpStatus.OK);
     }
 
     @PostMapping

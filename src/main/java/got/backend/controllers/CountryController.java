@@ -16,8 +16,6 @@ import java.util.List;
 public class CountryController {
     @Autowired
     private CountryRepository countryRepository;
-    @Autowired
-    private CountryService countryService;
 
     @GetMapping
     public List<Country> getAllCountries() {
