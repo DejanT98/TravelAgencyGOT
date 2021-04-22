@@ -52,8 +52,7 @@ public class DestinationController {
     public ResponseEntity<Destination> updateDestination(@PathVariable("id") Integer id,
                                                          @RequestBody Destination destination) {
         boolean success = destinationService.updateById(id, destination);
-        if(!success)
-        {
+        if(!success) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         destination.setId(id);

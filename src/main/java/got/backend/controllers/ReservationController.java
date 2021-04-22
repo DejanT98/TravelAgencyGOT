@@ -38,6 +38,15 @@ public class ReservationController {
     @PutMapping("id")
     public ResponseEntity<Reservation> updateReservation(@PathVariable("id") Integer id,
                                                          @RequestBody Reservation reservation) {
+        boolean success = reservationService.updateById(id, reservation);
+        if(!success)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("id")
+    public ResponseEntity<Reservation> deleteReservation(@PathVariable("id")Integer id)
+    {
         boolean success = reservationService.deleteById(id);
         if(!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
