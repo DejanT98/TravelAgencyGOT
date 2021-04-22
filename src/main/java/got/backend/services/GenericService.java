@@ -4,7 +4,6 @@ import got.backend.model.BaseEntity;
 import got.backend.repository.IGenericRepository;
 
 import java.util.List;
-import java.util.Set;
 
 public class GenericService<T extends BaseEntity> implements IService<T> {
 
@@ -14,7 +13,6 @@ public class GenericService<T extends BaseEntity> implements IService<T> {
     {
         this.repository = repository;
     }
-    //public GenericService()
 
     @Override
     public List<T> findAll() {

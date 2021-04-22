@@ -4,5 +4,5 @@ import got.backend.model.Country;
 import got.backend.services.IService;
 
 
-public interface ICountryService extends IService<Country>{
+public interface ICountryService extends IService<Country> {
 }

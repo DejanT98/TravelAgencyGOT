@@ -22,26 +22,4 @@ public class CountryService extends GenericService<Country> implements ICountryS
     public CountryService(CountryRepository coutryRepository) {
         super(coutryRepository);
     }
-
-//    @Autowired
-//    private DestinationRepository destinationRepository;
-//    @Autowired
-//    private CountryRepository countryRepository;
-
-//    private void updateDestinations(Country country) {
-//        List<Destination> destinations = destinationRepository.findDestinationsByCountry(country);
-//
-//        for (Destination d: destinations) {
-//            System.out.println(d.getName());
-//        }
-//    }
-
-//    public Country getCountryById(Integer id) {
-//        return countryRepository.getOne(id);
-//    }
-//
-//    public Set<Country> getAllCountries() {
-//        return (Set<Country>) countryRepository.findAll();
-//    }
-
 }

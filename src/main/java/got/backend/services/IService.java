@@ -1,7 +1,6 @@
 package got.backend.services;
 
 import java.util.List;
-import java.util.Set;
 
 public interface IService<T> {
     List<T> findAll();
