@@ -1,7 +1,9 @@
 package got.backend.controllers;
 
 import got.backend.model.Accommodation;
+import got.backend.model.Country;
 import got.backend.repository.AccommodationRepository;
+import got.backend.services.accommodation.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,34 +16,44 @@ import java.util.List;
 @RequestMapping("/accommodation")
 public class AccommodationController {
     @Autowired
-    private AccommodationRepository accommodationRepository;
+    private IAccommodationService accommodationService;
 
     @GetMapping
-    public List<Accommodation> getAllAccommodations() {
-        return accommodationRepository.findAll();
+    public ResponseEntity<List<Accommodation>> getAllAccommodations() {
+        return new ResponseEntity<>(accommodationService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Accommodation> getAccommodationById(@PathVariable("id") Integer id) {
-        if(!accommodationRepository.existsById(id))
+        Accommodation accommodation = accommodationService.findById(id);
+        if(accommodation == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Accommodation accommodation = accommodationRepository.getOne(id);
         return new ResponseEntity<>(accommodation, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Accommodation> createAccommodation(@RequestBody Accommodation accommodation) {
-        accommodationRepository.save(accommodation);
+        accommodationService.save(accommodation);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Accommodation> updateAccommodation(@PathVariable("id") Integer id,
                                                              @RequestBody Accommodation accommodation) {
-        if(!accommodationRepository.existsById(id))
+        boolean success = accommodationService.updateById(id, accommodation);
+        if(!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         accommodation.setId(id);
-        accommodationRepository.save(accommodation);
+        accommodationService.save(accommodation);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Accommodation> deleteAccommodation(@PathVariable("id") Integer id) {
+        boolean success = accommodationService.deleteById(id);
+        if(!success) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
