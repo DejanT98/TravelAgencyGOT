@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class Offer extends BaseEntity{
+public class Offer extends BaseEntity {
 
     @Temporal(TemporalType.DATE)
     private Date created;

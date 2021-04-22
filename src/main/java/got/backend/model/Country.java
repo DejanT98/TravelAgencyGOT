@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "Countries")
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class Country extends BaseEntity implements Serializable{
+public class Country extends BaseEntity {
 
     @Column(name = "name")
     private String name;

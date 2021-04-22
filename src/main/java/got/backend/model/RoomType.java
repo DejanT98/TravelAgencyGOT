@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class RoomType extends BaseEntity{
+public class RoomType extends BaseEntity {
 
     private int capacity;
     @OneToMany(mappedBy = "roomType")
