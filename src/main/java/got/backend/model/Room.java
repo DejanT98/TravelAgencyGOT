@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class Room extends BaseEntity{
+public class Room extends BaseEntity {
 
     private int number;
     private String description;

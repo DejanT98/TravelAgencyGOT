@@ -42,8 +42,6 @@ public class CountryController {
         boolean success = countryService.updateById(id, country);
         if(!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        country.setId(id);
-        countryService.save(country);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -5,9 +5,11 @@ import got.backend.repository.CountryRepository;
 import got.backend.repository.DestinationRepository;
 import got.backend.services.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DestinationService extends GenericService<Destination> implements IDestinationService {
 
     @Autowired

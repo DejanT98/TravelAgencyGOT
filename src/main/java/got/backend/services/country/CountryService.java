@@ -19,7 +19,7 @@ import java.util.Set;
 public class CountryService extends GenericService<Country> implements ICountryService {
 
     @Autowired
-    public CountryService(CountryRepository coutryRepository) {
-        super(coutryRepository);
+    public CountryService(CountryRepository countryRepository) {
+        super(countryRepository);
     }
 }

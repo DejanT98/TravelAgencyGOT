@@ -1,7 +1,7 @@
 package got.backend.controllers;
 
 import got.backend.model.Reservation;
-import got.backend.repository.ReservationRepository;
+import got.backend.services.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,34 +14,42 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
     @Autowired
-    private ReservationRepository reservationRepository;
+    private ReservationService reservationService;
 
     @GetMapping
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+    public ResponseEntity<List<Reservation>> getAllReservations() {
+        return new ResponseEntity<>(reservationService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("id")
     public ResponseEntity<Reservation> getReservationById(@PathVariable("id") Integer id) {
-        if(!reservationRepository.existsById(id))
+        Reservation reservation = reservationService.findById(id);
+        if(reservation == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Reservation reservation = reservationRepository.getOne(id);
         return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        reservationRepository.save(reservation);
+        reservationService.save(reservation);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("id")
     public ResponseEntity<Reservation> updateReservation(@PathVariable("id") Integer id,
                                                          @RequestBody Reservation reservation) {
-        if(!reservationRepository.existsById(id))
+        boolean success = reservationService.updateById(id, reservation);
+        if(!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        reservation.setId(id);
-        reservationRepository.save(reservation);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("id")
+    public ResponseEntity<Reservation> deleteReservation(@PathVariable("id")Integer id)
+    {
+        boolean success = reservationService.deleteById(id);
+        if(!success)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
