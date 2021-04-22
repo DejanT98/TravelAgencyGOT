@@ -7,23 +7,14 @@ import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class RoomType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class RoomType extends BaseEntity{
+
     private int capacity;
     @OneToMany(mappedBy = "roomType")
     private List<Room> rooms;
 
     public RoomType() {}
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public int getCapacity() {
         return capacity;

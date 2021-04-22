@@ -1,8 +1,7 @@
 package got.backend.controllers;
 
 import got.backend.model.Country;
-import got.backend.repository.CountryRepository;
-import got.backend.services.CountryService;
+import got.backend.services.country.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,43 +13,46 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/countries")
 public class CountryController {
+
     @Autowired
-    private CountryRepository countryRepository;
+    private ICountryService countryService;
 
     @GetMapping
-    public List<Country> getAllCountries() {
-        return countryRepository.findAll();
+    public ResponseEntity<List<Country>> getAllCountries() {
+        return new ResponseEntity<>(countryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Country> getCountryById(@PathVariable("id") Integer id) {
-        if(!countryRepository.existsById(id))
+        Country country = countryService.findById(id);
+        if(country == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Country country = countryRepository.getOne(id);
         return new ResponseEntity<>(country, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Country> createCountry(@RequestBody Country country) {
-        countryRepository.save(country);
+        countryService.save(country);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Country> updateCountry(@PathVariable("id")Integer id,
                                                  @RequestBody Country country) {
-        if(!countryRepository.existsById(id))
+        boolean success = countryService.updateById(id, country);
+        if(!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         country.setId(id);
-        countryRepository.save(country);
+        countryService.save(country);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Country> deleteCountry(@PathVariable("id") Integer id) {
-        if(!countryRepository.existsById(id))
+        boolean success = countryService.deleteById(id);
+        if(!success) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        countryRepository.deleteById(id);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

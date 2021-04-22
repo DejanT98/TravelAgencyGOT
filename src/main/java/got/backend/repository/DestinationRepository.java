@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 
-public interface DestinationRepository extends JpaRepository<Destination, Integer> {
+public interface DestinationRepository extends IGenericRepository<Destination> {
 
     @Query("select d " +
             "from Destination d inner join d.country c " +

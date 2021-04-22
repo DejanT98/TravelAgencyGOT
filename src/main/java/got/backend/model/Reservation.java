@@ -7,10 +7,8 @@ import java.util.Date;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class Reservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Reservation extends BaseEntity{
+
     private boolean reserved;
     @Temporal(TemporalType.DATE)
     private Date paymentDeadline;
@@ -24,13 +22,6 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public boolean isReserved() {
         return reserved;

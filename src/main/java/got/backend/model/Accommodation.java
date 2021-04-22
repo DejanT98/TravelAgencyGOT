@@ -7,11 +7,8 @@ import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class Accommodation {
+public class Accommodation extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String name;
     private String description;
     private int stars;
@@ -24,14 +21,6 @@ public class Accommodation {
     private Destination destination;
 
     public Accommodation() { }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

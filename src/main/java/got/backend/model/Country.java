@@ -11,11 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "Countries")
 @JsonIgnoreProperties({ "hibernateLazyInitializer"})
-public class Country implements Serializable {
+public class Country extends BaseEntity implements Serializable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     @Column(name = "name")
     private String name;
     @JsonIgnore
@@ -28,14 +25,6 @@ public class Country implements Serializable {
         this.id = id;
         this.name = name;
         this.destinations = new ArrayList<>();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
