@@ -1,7 +1,9 @@
 package got.backend.controllers;
 
+import got.backend.model.Country;
 import got.backend.model.Offer;
 import got.backend.repository.OfferRepository;
+import got.backend.services.offer.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,42 +17,44 @@ import java.util.List;
 public class OfferController {
 
     @Autowired
-    private OfferRepository offerRepository;
+    private OfferService offerService;
 
     @GetMapping
     public List<Offer> getAllCountries() {
-        return offerRepository.findAll();
+        return offerService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Offer> getOfferById(@PathVariable("id") Integer id) {
-        if(!offerRepository.existsById(id))
+        Offer offer = offerService.findById(id);
+        if(offer == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Offer offer = offerRepository.getOne(id);
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Offer> createOffer(@RequestBody Offer offer) {
-        offerRepository.save(offer);
+        offerService.save(offer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Offer> updateOffer(@PathVariable("id")Integer id,
                                                  @RequestBody Offer offer) {
-        if(!offerRepository.existsById(id))
+        boolean success = offerService.updateById(id, offer);
+        if(!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         offer.setId(id);
-        offerRepository.save(offer);
+        offerService.save(offer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Offer> deleteOffer(@PathVariable("id") Integer id) {
-        if(!offerRepository.existsById(id))
+        boolean success = offerService.deleteById(id);
+        if(!success) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        offerRepository.deleteById(id);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

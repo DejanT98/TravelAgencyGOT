@@ -1,5 +1,6 @@
 package got.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,9 +19,11 @@ public class Offer extends BaseEntity{
     @Temporal(TemporalType.DATE)
     private Date endDate;
     private boolean active;
-    @OneToOne(mappedBy = "offer")
+    @JsonIgnore
+    @OneToOne(mappedBy = "offer", fetch = FetchType.LAZY)
     private Reservation reservation;
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FK_room_id")
     private Room room;
 
