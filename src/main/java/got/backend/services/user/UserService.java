@@ -1,7 +1,6 @@
 package got.backend.services.user;
 
 import got.backend.model.User;
-import got.backend.repository.IGenericRepository;
 import got.backend.repository.UserRepository;
 import got.backend.services.GenericService;
 import org.springframework.stereotype.Service;

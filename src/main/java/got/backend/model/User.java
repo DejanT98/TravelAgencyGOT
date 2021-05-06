@@ -1,5 +1,6 @@
 package got.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jdk.jfr.Enabled;
 
@@ -19,6 +20,7 @@ public class User extends BaseEntity {
     private String email;
     @Column(unique = true, nullable = false)
     private String password;
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
 
