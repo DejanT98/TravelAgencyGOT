@@ -21,7 +21,7 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("id")
+    @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable("id") Integer id) {
         Reservation reservation = reservationService.findById(id);
         if(reservation == null)
@@ -35,7 +35,7 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("id")
+    @PutMapping("/{id}")
     public ResponseEntity<Reservation> updateReservation(@PathVariable("id") Integer id,
                                                          @RequestBody Reservation reservation) {
         boolean success = reservationService.updateById(id, reservation);
@@ -44,7 +44,7 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Reservation> deleteReservation(@PathVariable("id")Integer id)
     {
         boolean success = reservationService.deleteById(id);
