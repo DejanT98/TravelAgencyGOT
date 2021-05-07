@@ -59,13 +59,4 @@ public class DestinationController {
         destination.setId(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Offer> deleteDestination(@PathVariable("id") Integer id) {
-        boolean success = destinationService.deleteById(id);
-        if(!success) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }
