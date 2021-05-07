@@ -2,6 +2,7 @@ package got.backend.controllers;
 
 import got.backend.model.Country;
 import got.backend.model.Destination;
+import got.backend.model.Offer;
 import got.backend.repository.DestinationRepository;
 import got.backend.services.destination.IDestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,15 @@ public class DestinationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         destination.setId(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Offer> deleteDestination(@PathVariable("id") Integer id) {
+        boolean success = destinationService.deleteById(id);
+        if(!success) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
