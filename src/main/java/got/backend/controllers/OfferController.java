@@ -1,10 +1,13 @@
 package got.backend.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import got.backend.model.Country;
 import got.backend.model.Offer;
 import got.backend.repository.OfferRepository;
 import got.backend.services.offer.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +23,13 @@ public class OfferController {
     private OfferService offerService;
 
     @GetMapping
-    public List<Offer> getAllCountries() {
-        return offerService.findAll();
+    public ResponseEntity<List<Offer>> getAllOffers(String filter, Pageable pageable) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Offer offer = mapper.readValue(filter, Offer.class);
+//        FilterSpecification filterSpecification = new FilterSpecification(fobj);
+
+//        return new ResponseEntity<>(offerService.findAll(spec, paegeable));
+        return null;
     }
 
     @GetMapping("/{id}")
