@@ -2,6 +2,7 @@ package got.backend.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import got.backend.helpers.OfferSpecification;
 import got.backend.model.Country;
 import got.backend.model.Offer;
 import got.backend.repository.OfferRepository;
@@ -23,12 +24,19 @@ public class OfferController {
     private OfferService offerService;
 
     @GetMapping
-    public ResponseEntity<List<Offer>> getAllOffers(String filter, Pageable pageable) throws JsonProcessingException {
+    public ResponseEntity<List<Offer>> getAllOffers(String filter) throws JsonProcessingException {
+
         ObjectMapper mapper = new ObjectMapper();
         Offer offer = mapper.readValue(filter, Offer.class);
-//        FilterSpecification filterSpecification = new FilterSpecification(fobj);
+        System.out.println(offer);
+        OfferSpecification specification = new OfferSpecification(offer);
+        System.out.println(specification);
+//        List<Offer> offers = offerService.findWithSpecification(specification);
+//        for(Offer o: offers) {
+//            System.out.println(o.getStartDate() + " " + o.getEndDate());
+//        }
 
-//        return new ResponseEntity<>(offerService.findAll(spec, paegeable));
+//        return new ResponseEntity<List<Offer>>(offerService.findAll(), HttpStatus.OK);
         return null;
     }
 
