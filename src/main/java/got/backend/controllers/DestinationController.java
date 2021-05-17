@@ -1,11 +1,14 @@
 package got.backend.controllers;
 
+import got.backend.model.Accommodation;
 import got.backend.model.Country;
 import got.backend.model.Destination;
 import got.backend.model.Offer;
 import got.backend.repository.DestinationRepository;
 import got.backend.services.destination.IDestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +23,8 @@ public class DestinationController {
     private IDestinationService destinationService;
 
     @GetMapping
-    public ResponseEntity<List<Destination>> getAllDestinations() {
-        return new ResponseEntity<>(destinationService.findAll(), HttpStatus.OK);
+    public Page<Destination> getAllAccommodations(Pageable pageable) {
+        return destinationService.findAll(pageable);
     }
 
     @GetMapping("/{id}")

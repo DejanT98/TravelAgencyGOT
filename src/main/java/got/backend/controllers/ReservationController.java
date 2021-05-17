@@ -3,6 +3,8 @@ package got.backend.controllers;
 import got.backend.model.Reservation;
 import got.backend.services.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +19,8 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @GetMapping
-    public ResponseEntity<List<Reservation>> getAllReservations() {
-        return new ResponseEntity<>(reservationService.findAll(), HttpStatus.OK);
+    public Page<Reservation> getAllReservations(Pageable pageable) {
+        return reservationService.findAll(pageable);
     }
 
     @GetMapping("/{id}")

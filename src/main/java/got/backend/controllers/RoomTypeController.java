@@ -4,6 +4,8 @@ import got.backend.model.RoomType;
 import got.backend.repository.RoomTypeRepository;
 import got.backend.services.roomtype.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class RoomTypeController {
     private RoomTypeService roomTypeService;
 
     @GetMapping
-    public List<RoomType> getAllRoomTypes() {
-        return roomTypeService.findAll();
+    public Page<RoomType> getAllRoomTypes(Pageable pageable) {
+        return roomTypeService.findAll(pageable);
     }
 
     @GetMapping("/{id}")

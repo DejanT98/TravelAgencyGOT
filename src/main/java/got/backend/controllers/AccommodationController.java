@@ -5,6 +5,8 @@ import got.backend.model.Country;
 import got.backend.repository.AccommodationRepository;
 import got.backend.services.accommodation.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,8 @@ public class AccommodationController {
     private IAccommodationService accommodationService;
 
     @GetMapping
-    public ResponseEntity<List<Accommodation>> getAllAccommodations() {
-        return new ResponseEntity<>(accommodationService.findAll(), HttpStatus.OK);
+    public Page<Accommodation> getAllAccommodations(Pageable pageable) {
+        return accommodationService.findAll(pageable);
     }
 
     @GetMapping("/{id}")

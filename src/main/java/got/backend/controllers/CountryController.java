@@ -3,6 +3,8 @@ package got.backend.controllers;
 import got.backend.model.Country;
 import got.backend.services.country.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class CountryController {
     private ICountryService countryService;
 
     @GetMapping
-    public ResponseEntity<List<Country>> getAllCountries() {
-        return new ResponseEntity<>(countryService.findAll(), HttpStatus.OK);
+    public Page<Country> getAllCountries(Pageable pageable) {
+        return countryService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
