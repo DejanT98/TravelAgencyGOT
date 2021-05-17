@@ -31,10 +31,10 @@ public class OfferController {
         System.out.println(offer);
         OfferSpecification specification = new OfferSpecification(offer);
         System.out.println(specification);
-//        List<Offer> offers = offerService.findWithSpecification(specification);
-//        for(Offer o: offers) {
-//            System.out.println(o.getStartDate() + " " + o.getEndDate());
-//        }
+        List<Offer> offers = offerService.findWithSpecification(specification);
+        for(Offer o: offers) {
+            System.out.println(o.getStartDate() + " " + o.getEndDate());
+        }
 
 //        return new ResponseEntity<List<Offer>>(offerService.findAll(), HttpStatus.OK);
         return null;

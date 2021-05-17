@@ -7,6 +7,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OfferSpecification implements Specification<Offer> {
     private final Offer offer;
@@ -22,21 +24,20 @@ public class OfferSpecification implements Specification<Offer> {
         if(this.offer == null) {
             return null;
         }
-        Specification<Offer> specification = null;
+        final List<Predicate> predicates = new ArrayList<>();
 
         if(this.offer.getStartDate() != null) {
-            specification = OfferSpecifications.isOfferAfter(offer.getStartDate());
+            predicates.add(criteriaBuilder.greaterThan(root.get("startDate"), this.offer.getStartDate()));
         }
         if(this.offer.getEndDate() != null) {
-            specification = specification == null ?
-                    OfferSpecifications.isOfferBefore(offer.getEndDate()) :
-                    specification.and(OfferSpecifications.isOfferBefore(offer.getEndDate()));
-        }
-        System.out.println(specification);
+            predicates.add(criteriaBuilder.lessThan(root.get("endDate"), this.offer.getEndDate()));
 
-        if(specification == null) {
+        }
+
+        if(predicates.size() == 0) {
             return null;
         }
-        return specification.toPredicate(root, criteriaQuery, criteriaBuilder);
+        return criteriaBuilder
+                .and(predicates.toArray(new Predicate[predicates.size()]));
     }
 }
